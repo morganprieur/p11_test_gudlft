@@ -1,9 +1,11 @@
-# gudlift-registration
+
+# gudlift-registration 
+
 
 1. Why
 
-
     This is a proof of concept (POC) project to show a light-weight version of our competition booking platform. The aim is the keep things as light as possible, and use feedback from the users to iterate.
+
 
 2. Getting Started
 
@@ -14,6 +16,10 @@
     * [Flask](https://flask.palletsprojects.com/en/1.1.x/)
 
         Whereas Django does a lot of things for us out of the box, Flask allows us to add only what we need. 
+
+        **Edit**: Updated Flask in 3.0.0 version (27/02/24) 
+        [Versions Flask](https://flask.palletsprojects.com/en/3.0.x/changes/#version-3-0-0) 
+        [Doc Flask](https://flask.palletsprojects.com/en/2.2.x/quickstart/) 
      
 
     * [Virtual environment](https://virtualenv.pypa.io/en/stable/installation.html)
@@ -22,10 +28,17 @@
 
         Before you begin, please ensure you have this installed globally. 
 
+    **Edit**: Use Pipenv instead of virtualenv 
+    [Doc Pipenv](https://docs.pipenv.org/) 
+
 
 3. Installation
 
-    - After cloning, change into the directory and type <code>virtualenv .</code>. This will then set up a a virtual python environment within that directory.
+    - After cloning, change into the directory and type <code>virtualenv .</code>. This will then set up a a virtual python environment within that directory. 
+    **Edit**: Pipenv 
+    1. Enter the project folder and type `pipenv install` to install the packages and create the Pip files. 
+    2. Type `pipenv shell` to run the virtual env. 
+    3. Run the Flask project: `flask --app=server.py <--debug> run` 
 
     - Next, type <code>source bin/activate</code>. You should see that your command prompt has changed to the name of the folder. This means that you can install packages in here without affecting affecting files outside. To deactivate, type <code>deactivate</code>
 
@@ -33,7 +46,10 @@
 
     - Flask requires that you set an environmental variable to the python file. However you do that, you'll want to set the file to be <code>server.py</code>. Check [here](https://flask.palletsprojects.com/en/1.1.x/quickstart/#a-minimal-application) for more details
 
-    - You should now be ready to test the application. In the directory, type either <code>flask run</code> or <code>python -m flask run</code>. The app should respond with an address you should be able to go to using your browser.
+    - You should now be ready to test the application. In the directory, type either <code>flask run</code> or <code>python -m flask run</code>. The app should respond with an address you should be able to go to using your browser. 
+
+    **Edit**: In Flask 3.0.0, type `flask --app hello run --debug` to run the server. 
+
 
 4. Current Setup
 
@@ -41,6 +57,7 @@
      
     * competitions.json - list of competitions
     * clubs.json - list of clubs with relevant information. You can look here to see what email addresses the app will accept for login.
+
 
 5. Testing
 
