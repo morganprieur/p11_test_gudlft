@@ -38,7 +38,8 @@
     **Edit**: Pipenv 
     1. Enter the project folder and type `pipenv install` to install the packages and create the Pip files. 
     2. Type `pipenv shell` to run the virtual env. 
-    3. Run the Flask project: `flask --app=server.py <--debug> run` 
+    3. Entrer dans le dossier du projet `cd Python_Testing` 
+    4. Run the Flask project: `flask --app=server.py <--debug> run` 
 
     - Next, type <code>source bin/activate</code>. You should see that your command prompt has changed to the name of the folder. This means that you can install packages in here without affecting affecting files outside. To deactivate, type <code>deactivate</code>
 
