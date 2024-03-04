@@ -56,6 +56,10 @@ def purchasePlaces():
         message = f"Vous ne pouvez pas réserver plus de places que votre nombre de points ({club['points']})" 
         return render_template('booking.html', 
             message=message, club=club, competition=competition) 
+    if int(request.form['places']) > 12: 
+            message = "Vous ne pouvez pas réserver plus de 12 places par compétition." 
+            return render_template('booking.html', 
+                message=message, club=club, competition=competition) 
     else: 
         placesRequired = int(request.form['places']) 
         competition['numberOfPlaces'] = int(competition['numberOfPlaces'])-placesRequired
