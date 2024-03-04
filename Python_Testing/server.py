@@ -1,8 +1,10 @@
+
 import json
 from flask import ( 
     Flask, render_template, request, 
     redirect, flash, url_for 
 ) 
+from datetime import date, datetime  
 
 
 def loadClubs():
@@ -52,14 +54,39 @@ def book(competition,club):
 def purchasePlaces():
     competition = [c for c in competitions if c['name'] == request.form['competition']][0]
     club = [c for c in clubs if c['name'] == request.form['club']][0]
+
+    # Issue #2 : more than club['points'] 
     if int(request.form['places']) > club['points']: 
         message = f"Vous ne pouvez pas réserver plus de places que votre nombre de points ({club['points']})" 
         return render_template('booking.html', 
             message=message, club=club, competition=competition) 
+
+    # Issue #4 : more than 12 places 
     if int(request.form['places']) > 12: 
             message = "Vous ne pouvez pas réserver plus de 12 places par compétition." 
             return render_template('booking.html', 
                 message=message, club=club, competition=competition) 
+
+    # Issue #5 : past competition 
+    for comp in competitions: 
+        if request.form['competition'] == comp['date']: 
+            competition = comp 
+
+    comp_date = competition['date'] 
+    comp_year = comp_date[0:4] 
+    comp_month = comp_date[5:7] 
+    comp_day = comp_date[8:11] 
+    comp_hour = comp_date[12:14] 
+    comp_minute = comp_date[15:17] 
+    comp_seconds = comp_date[18:20] 
+    date_today = datetime.today() 
+
+    competition_date = datetime(int(comp_year), int(comp_month), int(comp_day)) 
+
+    if competition_date < date_today: 
+        message = "La date de la compétition est passée, vous ne pouvez pas réserver de places." 
+        return render_template('booking.html', 
+            message=message, club=club, competition=competition) 
     else: 
         placesRequired = int(request.form['places']) 
         competition['numberOfPlaces'] = int(competition['numberOfPlaces'])-placesRequired
