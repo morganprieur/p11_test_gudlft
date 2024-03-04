@@ -26,8 +26,8 @@ class MyTest(unittest.TestCase):
     def test_message_past_competition(self): 
         data = { 
             "club": "Simply Lift", 
-            "competition": "Spring Festival", 
-            "places": 13 
+            "competition": "Fall Classic", 
+            "places": 1 
         } 
         response = self.client.post('/purchasePlaces', data=data) 
         assert response.status_code == 200 
@@ -36,8 +36,8 @@ class MyTest(unittest.TestCase):
             if data['competition'] == comp['date']: 
                 competition = comp 
         date_today = date.today() 
-        assert str('La date de la compétition est passée, vous ne pouvez pas réserver de places.') in str(response.data) 
-        # assert str('Vous ne pouvez') in str(response.data) 
+        message = 'La date de la compétition est passée, vous ne pouvez pas réserver de places.' 
+        assert message.encode('utf-8') in response.data 
         assert response.request.path == '/purchasePlaces' 
 
 
@@ -45,7 +45,7 @@ class MyTest(unittest.TestCase):
         data = { 
             "club": "Simply Lift", 
             "competition": "Spring Festival", 
-            "places": 12 
+            "places": 1 
         } 
         response = self.client.post('/purchasePlaces', data=data) 
         assert response.status_code == 200 
@@ -54,7 +54,7 @@ class MyTest(unittest.TestCase):
             if data['competition'] == comp['date']: 
                 competition = comp 
         date_today = date.today() 
-        assert str('La date de la compétition est passée, vous ne pouvez pas réserver de places. ') not in str(response.data) 
-        # assert str('Vous ne pouvez')  in str(response.data) 
+        message = 'La date de la compétition est passée, vous ne pouvez pas réserver de places.' 
+        assert message.encode('utf-8') not in response.data 
         assert response.request.path == '/purchasePlaces' 
 
