@@ -11,6 +11,9 @@
     {% if message %} 
     <p style="color:red"> 
         {{message}} 
+        {% if 'date de la compétition est passée' in message %} 
+        <button class="demi-button" onclick="history.back()">Retour</button> 
+        {% endif %}
     </p>
     {% endif %} 
 

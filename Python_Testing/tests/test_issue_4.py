@@ -11,8 +11,7 @@ competitions = loadCompetitions()
 clubs = loadClubs() 
 
 
-# Issue #4 - 
-# Clubs shouldn't be able to book more than 12 places per competition 
+# Issue #4 - Booking places in past competitions 
 class MyTest(unittest.TestCase):
 
 	def setUp(self):
