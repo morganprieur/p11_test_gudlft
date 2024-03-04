@@ -63,15 +63,11 @@ def purchasePlaces():
 def all_clubs(): 
     return clubs 
 
-@app.route('/hello', methods=['GET']) 
-def hello(): 
-    return {'hello': 'world'} 
-    # return 'Hello, World !' 
+# @app.route('/hello', methods=['GET']) 
+# def hello(): 
+#     return {'hello': 'world'} 
 
 # TODO: Add route for points display 
-# @app.route('/welcome') 
-# def welcome(club, competitions): 
-#     return render_template('welcome.html', club=club, competitions=competitions) 
 
 
 @app.route('/logout')

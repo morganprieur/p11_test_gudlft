@@ -7,6 +7,7 @@ from server import loadClubs, loadCompetitions
 competitions = loadCompetitions()
 clubs = loadClubs()
 
+# 	# Tests error #1 
 # def test_hello(app, client): 
 #     res = client.get('/hello') 
 #     assert res.status_code == 200 
@@ -50,6 +51,28 @@ clubs = loadClubs()
 # # --> ok 
 
 
+# # tester un faux mail + retour sur '/' avec message  
+# def test_showSummary_faux_mail(app, client): 
+# 	res = client.post('/showSummary', data={"email": "jo@simplylift.co"}) 
+# 	assert res.status_code == 200 
+# 	assert len(clubs) == 3 
+
+# 	# récupérer les données du form de co 
+# 	form_email = res.data[slice(226, 242)] 
+# 	clubs_emails = [club['email'] for club in clubs] 
+# 	assert str(form_email)[slice(2, -1)] not in clubs_emails 
+# 	# --> ok 
+
+# 	if str(form_email)[slice(2, -1)] not in clubs_emails: 
+# 		message = "Ce mail n'est pas enregistré " 
+# 		message2 = "Ce mail n'est pas enregistré" 
+# 		res_get = client.get('/') 
+# 		res_get.data = res_get.data + message.encode('utf-8') 
+# 		assert res_get.status_code == 200 
+# 		assert message2.encode('utf-8') in res_get.data[0:] 
+# 		# assert message2.encode('utf-8') in res_get.data[slice(0, -1)] 
+# 	# --> ok 
+
 # def test_showSummary_club3(app, client): 
 # 	res = client.post('/showSummary', data={"email": "kate@shelifts.co.uk"}) 
 # 	assert res.status_code == 200 
@@ -62,6 +85,7 @@ clubs = loadClubs()
 # # --> ok 
 
 
+# 	# Tests error #2 
 # tester un faux mail + retour sur '/' avec message  
 def test_showSummary_faux_mail(app, client): 
 	res = client.post('/showSummary', data={"email": "jo@simplylift.co"}) 
@@ -72,19 +96,6 @@ def test_showSummary_faux_mail(app, client):
 	form_email = res.data[slice(226, 242)] 
 	clubs_emails = [club['email'] for club in clubs] 
 	assert str(form_email)[slice(2, -1)] not in clubs_emails 
-	# --> ok 
-
-	if str(form_email)[slice(2, -1)] not in clubs_emails: 
-		message = "Ce mail n'est pas enregistré" 
-		res_get = client.get('/', data=message) 
-		assert res_get.status_code == 200 
-		# message = res_get.data  
-		# message = 'pas enregistr' 
-		print(res_get.data) 
-		assert message.encode('utf-8') in res_get.data[slice(1, -1)] 
-# --> No. Ne teste pas l'url ('/') après le mauvais mail, 
-# mais recommence le test du début avec ('/') 
-
 
 
 # # Tester GET si erreur de mail 
