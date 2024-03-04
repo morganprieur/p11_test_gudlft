@@ -1,12 +1,14 @@
 import json
-from flask import Flask, render_template, request, redirect, flash, url_for
+from flask import ( 
+    Flask, render_template, request, 
+    redirect, flash, url_for 
+) 
 
 
 def loadClubs():
     with open('clubs.json') as c:
          listOfClubs = json.load(c)['clubs']
          return listOfClubs
-
 
 def loadCompetitions():
     with open('competitions.json') as comps:
@@ -24,10 +26,15 @@ clubs = loadClubs()
 def index():
     return render_template('index.html')
 
-@app.route('/showSummary',methods=['POST'])
-def showSummary():
-    club = [club for club in clubs if club['email'] == request.form['email']][0]
-    return render_template('welcome.html', club=club, competitions=competitions)
+@app.route('/showSummary', methods=['POST'])
+def showSummary(): 
+    clubs_email = [club['email'] for club in clubs] 
+    if request.form['email'] not in clubs_email: 
+        message = 'Ce mail n\'est pas enregistré' 
+        return render_template('index.html', message=message) 
+    else: 
+        club = [club for club in clubs if club['email'] == request.form['email']][0] 
+        return render_template('welcome.html', club=club, competitions=competitions) 
 
 
 @app.route('/book/<competition>/<club>')
@@ -51,10 +58,16 @@ def purchasePlaces():
     return render_template('welcome.html', club=club, competitions=competitions)
 
 
+# For tests 
+@app.route('/all_clubs', methods=['GET']) 
+def all_clubs(): 
+    return clubs 
+
+# @app.route('/hello', methods=['GET']) 
+# def hello(): 
+#     return {'hello': 'world'} 
+
 # TODO: Add route for points display 
-# @app.route('/welcome') 
-# def welcome(club, competitions): 
-#     return render_template('welcome.html', club=club, competitions=competitions) 
 
 
 @app.route('/logout')

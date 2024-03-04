@@ -1,17 +1,8 @@
 
-
-# Docker 
-.env 
-volumes/
+.pytest_cache/
 
 # Snyk 
 .dcignore
 
 roadmap.md
-api/api/__pycache__
-
-# à vérifier et remettre : 
-api/commands
-
-
 
