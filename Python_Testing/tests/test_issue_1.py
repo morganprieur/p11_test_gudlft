@@ -23,7 +23,7 @@ def test_all_clubs(app, client):
 	assert len(res.json) == 3 
 # --> ok 
 
-# tester les 3 mails des secrétaires 
+# tester 2 mails des secrétaires 
 def test_showSummary_club1(app, client): 
 	res = client.post('/showSummary', data={"email": "john@simplylift.co"}) 
 	assert res.status_code == 200 
