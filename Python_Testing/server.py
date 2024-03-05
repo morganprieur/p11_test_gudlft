@@ -9,13 +9,31 @@ from datetime import date, datetime
 
 def loadClubs():
     with open('clubs.json') as c:
-         listOfClubs = json.load(c)['clubs']
-         return listOfClubs
+        listOfClubs = json.load(c)['clubs'] 
+        return listOfClubs
 
 def loadCompetitions():
     with open('competitions.json') as comps:
-         listOfCompetitions = json.load(comps)['competitions']
-         return listOfCompetitions
+        listOfCompetitions = json.load(comps)['competitions']
+        return listOfCompetitions
+
+# Update the clubs data 
+def updateClubs(club_name, placesRequired): 
+    listOfClubs = loadClubs() 
+
+    for c in listOfClubs: 
+        if club_name == c['name']: 
+            club = listOfClubs.pop(listOfClubs.index(c)) 
+            club['points'] -= placesRequired 
+            # file deepcode ignore InfiniteLoopByCollectionModification/test: local and dev project 
+            listOfClubs.append(club) 
+
+            to_register = {} 
+            to_register['clubs'] = listOfClubs 
+
+            with open(f"clubs.json", "w") as cfile: 
+                json.dump(to_register, cfile, indent=4) 
+            return True 
 
 
 app = Flask(__name__)
@@ -31,6 +49,8 @@ def index():
 @app.route('/showSummary', methods=['POST'])
 def showSummary(): 
     clubs_email = [club['email'] for club in clubs] 
+
+    # Issue #1 : if email not registered 
     if request.form['email'] not in clubs_email: 
         message = 'Ce mail n\'est pas enregistré' 
         return render_template('index.html', message=message) 
@@ -55,7 +75,7 @@ def purchasePlaces():
     competition = [c for c in competitions if c['name'] == request.form['competition']][0]
     club = [c for c in clubs if c['name'] == request.form['club']][0]
 
-    # Issue #2 : more than club['points'] 
+    # Issue #2 : more than club's points 
     if int(request.form['places']) > club['points']: 
         message = f"Vous ne pouvez pas réserver plus de places que votre nombre de points ({club['points']})" 
         return render_template('booking.html', 
@@ -73,6 +93,10 @@ def purchasePlaces():
             competition = comp 
 
     comp_date = competition['date'] 
+    # str_to_dt : strptime 
+    # date_object = datetime.strptime(date_string, "%Y %M, %d, %h, %i?, s") 
+    # "%y-%m-%d %H:%M:%s" 
+    # date_time = now.strftime("%m/%d/%Y, %H:%M:%S") 
     comp_year = comp_date[0:4] 
     comp_month = comp_date[5:7] 
     comp_day = comp_date[8:11] 
@@ -89,10 +113,15 @@ def purchasePlaces():
             message=message, club=club, competition=competition) 
     else: 
         placesRequired = int(request.form['places']) 
-        competition['numberOfPlaces'] = int(competition['numberOfPlaces'])-placesRequired
-        flash('Great-booking complete!')
+        competition['numberOfPlaces'] = int(competition['numberOfPlaces'])-placesRequired 
+        
+        # Issue #6 : Deduct the places from the club's points 
+        club_name = club['name'] 
+        updateClubs(club_name, placesRequired) 
+
+        flash('Great-booking complete!') 
         return render_template('welcome.html', 
-            club=club, competitions=competitions)
+            club=club, competitions=competitions) 
 
 
 # For tests 
