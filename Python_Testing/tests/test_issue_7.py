@@ -36,6 +36,8 @@ class MyTest(unittest.TestCase):
         # vérifier le nombre de clubs affichés 
         # vérifier les points des clubs 
         for c in clubs: 
+            # print(c['name'].encode('utf-8')) 
             assert c['name'].encode('utf-8') in response.data 
+            # print(str(c['points']).encode('utf-8')) 
             assert str(c['points']).encode('utf-8') in response.data 
 

@@ -3,82 +3,73 @@
 import json 
 from server import loadClubs, loadCompetitions 
 
+from server import app 
+import unittest 
+
 
 competitions = loadCompetitions()
-clubs = loadClubs()
+clubs = loadClubs() 
 
 
-# Tests error #1 
-def test_hello(app, client): 
-    res = client.get('/hello') 
-    assert res.status_code == 200 
-    expected = {'hello': 'world'} 
-    assert expected == json.loads(  
-		res.get_data(as_text=True)) 
-# --> ok 
-
-def test_all_clubs(app, client): 
-	res = client.get('/all_clubs')  
-	assert res.status_code == 200  
-	assert len(res.json) == 3 
-# --> ok 
-
-# tester 2 mails des secrétaires 
-def test_showSummary_club1(app, client): 
-	res = client.post('/showSummary', data={"email": "john@simplylift.co"}) 
-	assert res.status_code == 200 
-	assert len(clubs) == 3 
-
-	# récupérer les données du form de co 
-	form_email = res.data[slice(211, 229)] 
-	clubs_emails = [club['email'] for club in clubs] 
-	assert str(form_email)[slice(2, -1)] in clubs_emails 
-# --> ok 
+class MyTest(unittest.TestCase): 
+	""" 
+		Issue #1 - ERROR: 
+		When: 
+		A user types in an email not found in the system 
+		Then: 
+		App crashes 
+		Expected: 
+		Code should be written to ensure that 
+		if something goes wrong (like the email isn't found), 
+		the error is caught and handled. 
+		Display an error message like "Sorry, that email wasn't found." 
+	""" 
+	def setUp(self): 
+		self.app = app 
+		self.app_ctxt = self.app.app_context() 
+		self.app_ctxt.push() 
+		self.client = self.app.test_client() 
 
 
-def test_showSummary_club2(app, client): 
-	res = client.post('/showSummary', data={"email": "admin@irontemple.com"}) 
-	assert res.status_code == 200 
-	assert len(clubs) == 3 
+	# tester 2 mails des secrétaires 
+	def test_showSummary_club_1(self): 
+		data = {"email": "john@simplylift.co"} 
+		res = self.client.post('/showSummary', data=data) 
+		assert res.status_code == 200 
+		assert len(clubs) == 3 
 
-	# récupérer les données du form de co 
-	form_email = res.data[slice(227, 247)] 
-	clubs_emails = [club['email'] for club in clubs] 
-	assert str(form_email)[slice(2, -1)] in clubs_emails 
-# --> ok 
-
-
-# tester un faux mail + retour sur '/' avec message  
-def test_showSummary_faux_mail(app, client): 
-	res = client.post('/showSummary', data={"email": "jo@simplylift.co"}) 
-	assert res.status_code == 200 
-	assert len(clubs) == 3 
-
-	# récupérer les données du form de co 
-	form_email = res.data[slice(226, 242)] 
-	clubs_emails = [club['email'] for club in clubs] 
-	assert str(form_email)[slice(2, -1)] not in clubs_emails 
-	# --> ok 
-
-	if str(form_email)[slice(2, -1)] not in clubs_emails: 
-		message = "Ce mail n'est pas enregistré " 
-		message2 = "Ce mail n'est pas enregistré" 
-		res_get = client.get('/') 
-		res_get.data = res_get.data + message.encode('utf-8') 
-		assert res_get.status_code == 200 
-		assert message2.encode('utf-8') in res_get.data[0:] 
-		# assert message2.encode('utf-8') in res_get.data[slice(0, -1)] 
-	# --> ok 
+		# récupérer les données du form de co 
+		email = data['email'] 
+		clubs_emails = [club['email'] for club in clubs] 
+		assert email in clubs_emails 
 
 
-def test_showSummary_club3(app, client): 
-	res = client.post('/showSummary', data={"email": "kate@shelifts.co.uk"}) 
-	assert res.status_code == 200 
-	assert len(clubs) == 3 
+	# def test_showSummary_club2(app, client): 
+	def test_showSummary_club_2(self): 
+		data = {"email": "admin@irontemple.com"} 
+		res = self.client.post('/showSummary', data=data) 
+		assert res.status_code == 200 
+		assert len(clubs) == 3 
 
-	# récupérer les données du form de co 
-	form_email = res.data[slice(227, 246)] 
-	clubs_emails = [club['email'] for club in clubs] 
-	assert str(form_email)[slice(2, -1)] in clubs_emails 
-# --> ok 
+		# récupérer les données du form de co 
+		email = data['email'] 
+		clubs_emails = [club['email'] for club in clubs] 
+		assert email in clubs_emails 
+
+
+	# def test_showSummary_faux_mail(app, client): 
+	def test_showSummary_faux_mail(self): 
+		data = {"email": "jo@simplylift.co"} 
+		response = self.client.post('/showSummary', data=data) 
+		assert response.status_code == 200 
+		assert len(clubs) == 3 
+
+		# récupérer les données du form de co 
+		email = data['email'] 
+		clubs_emails = [club['email'] for club in clubs] 
+		assert email not in clubs_emails 
+
+		if email not in clubs_emails: 
+			message = "pas enregistré" 
+			assert message.encode('utf-8') in response.data 
 

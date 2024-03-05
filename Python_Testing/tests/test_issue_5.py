@@ -37,6 +37,7 @@ class MyTest(unittest.TestCase):
                 competition = comp 
         date_today = date.today() 
         message = 'La date de la compétition est passée, vous ne pouvez pas réserver de places.' 
+        # print(message.encode('utf-8')) 
         assert message.encode('utf-8') in response.data 
         assert response.request.path == '/purchasePlaces' 
 
@@ -44,7 +45,7 @@ class MyTest(unittest.TestCase):
     def test_message_future_competition(self): 
         data = { 
             "club": "Simply Lift", 
-            "competition": "Spring Festival", 
+            "competition": "New Winter", 
             "places": 1 
         } 
         response = self.client.post('/purchasePlaces', data=data) 

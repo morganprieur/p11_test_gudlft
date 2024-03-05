@@ -17,6 +17,12 @@ def loadCompetitions():
         listOfCompetitions = json.load(comps)['competitions']
         return listOfCompetitions
 
+app = Flask(__name__)
+app.secret_key = 'something_special'
+
+competitions = loadCompetitions()
+clubs = loadClubs()
+
 # Update the clubs data 
 def updateClubs(club_name, placesRequired): 
     listOfClubs = loadClubs() 
@@ -36,12 +42,7 @@ def updateClubs(club_name, placesRequired):
             return True 
 
 
-app = Flask(__name__)
-app.secret_key = 'something_special'
-
-competitions = loadCompetitions()
-clubs = loadClubs()
-
+# ======== Routes ========  # 
 @app.route('/')
 def index(): 
     # Issue #7 : Implement Points Display Board 
@@ -53,7 +54,7 @@ def showSummary():
 
     # Issue #1 : if email not registered 
     if request.form['email'] not in clubs_email: 
-        message = 'Ce mail n\'est pas enregistré' 
+        message = "Ce mail n'est pas enregistré" 
         return render_template('index.html', message=message) 
     else: 
         club = [club for club in clubs if club['email'] == request.form['email']][0] 
