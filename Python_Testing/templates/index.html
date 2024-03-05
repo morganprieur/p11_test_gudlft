@@ -3,21 +3,43 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css"> 
+    <!-- <link rel="stylesheet" href="../styles.css"> -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
     <title>GUDLFT Registration</title>
 </head>
 <body>
-    <h1>Welcome to the GUDLFT Registration Portal!</h1> 
+    <div id="home">
+        <h1>Welcome to the GUDLFT Registration Portal!</h1> 
 
-    {% if message %} 
-        <p style="color:red">{{ message }}</p> 
-    {% endif %} 
+        <section id="connexion"> 
+            {% if message %} 
+                <p style="color:red">{{ message }}</p> 
+            {% endif %} 
 
-    Please enter your secretary email to continue:
-    <form action="showSummary" method="post">
-        <label for="email">Email:</label>
-        <input type="email" name="email" id=""/>
-        <button type="submit">Enter</button>
-    </form> 
+            Please enter your secretary email to continue:
+            <form action="showSummary" method="post">
+                <label for="email">Email:</label>
+                <input type="email" name="email" id=""/>
+                <button type="submit">Enter</button>
+            </form> 
+        </section>
 
+        <section id="clubs_display"> 
+            <h2>Tous les clubs</h2> 
+
+            <table class="w3-table w3-striped"> 
+                <tr>
+                    <th>Noms</th>
+                    <th>Nombre de points</th>
+                </tr>
+                {% for c in clubs %} 
+                <tr> 
+                    <td>{{ c.name }} </td> <td>{{ c.points }} </td> 
+                </tr> 
+                {% endfor %} 
+            </table> 
+        </section>
+    </div>
 </body>
 </html>

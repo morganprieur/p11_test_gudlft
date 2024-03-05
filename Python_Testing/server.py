@@ -43,8 +43,9 @@ competitions = loadCompetitions()
 clubs = loadClubs()
 
 @app.route('/')
-def index():
-    return render_template('index.html')
+def index(): 
+    # Issue #7 : Implement Points Display Board 
+    return render_template('index.html', clubs=clubs)
 
 @app.route('/showSummary', methods=['POST'])
 def showSummary(): 
