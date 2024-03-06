@@ -11,8 +11,18 @@ competitions = loadCompetitions()
 clubs = loadClubs() 
 
 
-# Issue #4 - Booking places in past competitions 
-class MyTest(unittest.TestCase):
+# Issue #4 - Booking more than 12 places. 
+class MyTest(unittest.TestCase): 
+	""" 
+		Issue #4 : When: 
+		A secretary tries to book more than 12 places in one competition 
+		Then: 
+		Those places are confirmed 
+		Expected: 
+		They should be able to book no more than 12 places. 
+		The UI should prevent them from booking more than 12 places. 
+		The places are correctly deducted from the competition. 
+	""" 
 
 	def setUp(self):
 		self.app = app
@@ -29,9 +39,10 @@ class MyTest(unittest.TestCase):
 		} 
 		response = self.client.post('/purchasePlaces', data=data) 
 		assert response.status_code == 200 
-		assert str('Vous ne pouvez') in str(response.data) 
+		assert str('Vous ne pouvez pas') in str(response.data) 
+		assert str('plus de 12 places') in str(response.data) 
 		assert response.request.path == '/purchasePlaces' 
-# --> ok 
+	# --> ok 
 
 
 	def test_message_places_less_than_12(self): 
@@ -42,7 +53,8 @@ class MyTest(unittest.TestCase):
 		} 
 		response = self.client.post('/purchasePlaces', data=data) 
 		assert response.status_code == 200 
-		assert str('Vous ne pouvez') not in str(response.data) 
+		assert str('Vous ne pouvez pas') not in str(response.data) 
+		assert str('plus de 12 places') not in str(response.data) 
 		assert response.request.path == '/purchasePlaces' 
-# --> ok 
+	# --> ok 
 
