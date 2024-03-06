@@ -11,17 +11,19 @@ from datetime import date
 competitions = loadCompetitions()
 clubs = loadClubs() 
 
-# Issue #6 - Point updates are not reflected 
-# Given: 
-# A club secretary wishes to redeem points for a place in a competition 
-# When: 
-# The number of places is confirmed 
-# Then: 
-# The amount of club points available remain the same 
-# Expected: 
-# The amount of points used should be deducted from the club's balance. 
 
+# Issue #6 - Point updates are not reflected 
 class MyTest(unittest.TestCase): 
+    """ 
+        Given: 
+        A club secretary wishes to redeem points for a place in a competition 
+        When: 
+        The number of places is confirmed 
+        Then: 
+        The amount of club points available remain the same 
+        Expected: 
+        The amount of points used should be deducted from the club's balance. 
+    """ 
 
     def setUp(self):
         self.app = app

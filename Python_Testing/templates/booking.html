@@ -11,15 +11,19 @@
     {% if message %} 
     <p style="color:red"> 
         {{message}} &nbsp; 
-        <button class="demi-button" onclick="history.back()">Retour</button> 
+        <button onclick="history.back()">Retour</button> 
     </p>
     {% endif %} 
 
+    {%if comp['past']==True%}
+    <p>La date de la compétition est passée, vous ne pouvez pas réserver de places.</p> 
+    {%else%}
     <form action="/purchasePlaces" method="post">
         <input type="hidden" name="club" value="{{club['name']}}">
         <input type="hidden" name="competition" value="{{competition['name']}}">
         <label for="places">How many places?</label>&nbsp; <input type="number" name="places" id=""/>
         <button type="submit">Book</button>
     </form>
+    {%endif%}
 </body>
 </html>
