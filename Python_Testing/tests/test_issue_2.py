@@ -12,7 +12,18 @@ competitions = loadCompetitions()
 clubs = loadClubs() 
 
 
-class MyTest(unittest.TestCase):
+class MyTest(unittest.TestCase): 
+	""" 
+		Issue #2 : When: 
+		A secretary redeems more points than they have available, 
+		which would leave them in the negative 
+		Then: 
+		They receive a confirmation message 
+		Expected: 
+		They should not be able to redeem more points than available; 
+		this should be done within the UI. 
+		The redeemed points should be correctly deducted from the club's total. 
+	""" 
 
 	def setUp(self):
 		self.app = app
@@ -30,8 +41,9 @@ class MyTest(unittest.TestCase):
 		response = self.client.post('/purchasePlaces', data=data) 
 		assert response.status_code == 200 
 		assert str('Vous ne pouvez') in str(response.data) 
+		assert str('plus de places que votre nombre de points') in str(response.data) 
 		assert response.request.path == '/purchasePlaces' 
-# --> ok 
+	# --> ok 
 
 
 	def test_message_places_inferieur_points(self): 
@@ -43,47 +55,6 @@ class MyTest(unittest.TestCase):
 		response = self.client.post('/purchasePlaces', data=data) 
 		assert response.status_code == 200 
 		assert str('Vous ne pouvez') not in str(response.data) 
+		assert str('plus de places que votre nombre de points') not in str(response.data) 
 		assert response.request.path == '/purchasePlaces' 
-# --> ok 
-
-
-# tester 
-# - /book/<competition>/<club> 
-# - number of points 
-# - /purchasePlaces -> error if places > points 
-def test_base_data(app, client): 
-	res = client.get('/book/Fall Classic/Simply Lift') 
-	assert res.status_code == 200 
-	# Define club and competition: 
-	for c in clubs: 
-		if c['name'] == 'Simply Lift': 
-			club = c 
-	for c in competitions: 
-		if c['name'] == 'Fall Classic': 
-			competition = c 
-	# Points is an integer 
-	assert club['points'] == 13 
-	# numberOfPlaces is an integer 
-	assert competition['numberOfPlaces'] == 13 
-# --> ok 
-
-
-# - /purchasePlaces -> error if places > points 
-def test_max_points_club(app, client): 
-	data = { 
-		"club": "Simply Lift", 
-		"competition": "Fall Classic", 
-		"places": 15 
-	} 
-	res = client.post('/purchasePlaces', data=data) 
-	assert res.status_code == 200 
-	for c in clubs: 
-		if c['name'] == 'Simply Lift': 
-			club = c 
-	for c in competitions: 
-		if c['name'] == 'Fall Classic': 
-			competition = c 
-	assert 15 in data.values() 
-	url = 'booking.html' 
 	# --> ok 
-
