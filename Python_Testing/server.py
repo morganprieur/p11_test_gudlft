@@ -42,6 +42,16 @@ def updateClubs(club_name, placesRequired):
                 json.dump(to_register, cfile, indent=4) 
             return True 
 
+# Add a 'past' attribute into competition items. 
+def addPastFlag(): 
+    time_now = datetime.now() 
+    for comp in competitions: 
+        comp_date = datetime.strptime(comp['date'], "%Y-%m-%d %H:%M:%S") 
+        if comp_date < time_now: 
+            comp['past'] = True 
+        else: 
+            comp['past'] = False 
+        print(comp) 
 
 # ======== Routes ========  # 
 @app.route('/')
@@ -54,14 +64,15 @@ def showSummary():
     clubs_email = [club['email'] for club in clubs] 
 
     # Issue #5 : past competition 
-    time_now = datetime.now() 
-    for comp in competitions: 
-        comp_date = datetime.strptime(comp['date'], "%Y-%m-%d %H:%M:%S") 
-        if comp_date < time_now: 
-            comp['past'] = True 
-        else: 
-            comp['past'] = False 
-        # print(comp) 
+    addPastFlag() 
+    # time_now = datetime.now() 
+    # for comp in competitions: 
+    #     comp_date = datetime.strptime(comp['date'], "%Y-%m-%d %H:%M:%S") 
+    #     if comp_date < time_now: 
+    #         comp['past'] = True 
+    #     else: 
+    #         comp['past'] = False 
+    #     # print(comp) 
 
     # Issue #1 : if email not registered 
     if request.form['email'] not in clubs_email: 
@@ -88,6 +99,9 @@ def book(competition,club):
 def purchasePlaces():
     competition = [c for c in competitions if c['name'] == request.form['competition']][0]
     club = [c for c in clubs if c['name'] == request.form['club']][0]
+
+    # Issue #5 : past competition 
+    addPastFlag() 
 
     # Issue #2 : more than club's points 
     if int(request.form['places']) > club['points']: 
