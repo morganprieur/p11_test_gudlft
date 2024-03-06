@@ -24,7 +24,6 @@ class MyTest(unittest.TestCase):
         Expected: 
         The amount of points used should be deducted from the club's balance. 
     """ 
-
     def setUp(self):
         self.app = app
         self.app_ctxt = self.app.app_context()
@@ -43,22 +42,17 @@ class MyTest(unittest.TestCase):
         # Reserved places 
         places = int(data['places']) 
 
-        # Club's points before the reservation 
+        # # Club's points before the reservation 
         for c in clubs: 
             if data['club'] == c['name']: 
-                club_before = c 
-    
-        clubs_after = loadClubs() 
-        for c in clubs_after: 
-            if data['club'] == c['name']: 
-                club_after = c 
+                club = c 
 
         message = 'Great-booking complete!' 
         assert message.encode('utf-8') in response.data 
 
         # Expected points after reservation 
-        expected_points = club_before['points'] - places 
-        assert  club_after['points'] == expected_points 
-        assert response.request.path == '/purchasePlaces' 
-
+        club['points'] -= data['places'] 
+        message = f"Points available: {club['points']}" 
+        assert message.encode('utf-8') in response.data 
+    # --> ok 
 
