@@ -52,6 +52,7 @@ def addPastFlag():
         else: 
             comp['past'] = False 
         print(comp) 
+    return competitions 
 
 # ======== Routes ========  # 
 @app.route('/')
@@ -64,15 +65,7 @@ def showSummary():
     clubs_email = [club['email'] for club in clubs] 
 
     # Issue #5 : past competition 
-    addPastFlag() 
-    # time_now = datetime.now() 
-    # for comp in competitions: 
-    #     comp_date = datetime.strptime(comp['date'], "%Y-%m-%d %H:%M:%S") 
-    #     if comp_date < time_now: 
-    #         comp['past'] = True 
-    #     else: 
-    #         comp['past'] = False 
-    #     # print(comp) 
+    competitions = addPastFlag() 
 
     # Issue #1 : if email not registered 
     if request.form['email'] not in clubs_email: 
@@ -97,11 +90,14 @@ def book(competition,club):
 
 @app.route('/purchasePlaces', methods=['POST'])
 def purchasePlaces():
-    competition = [c for c in competitions if c['name'] == request.form['competition']][0]
+    # competition = [c for c in competitions if c['name'] == request.form['competition']][0]
     club = [c for c in clubs if c['name'] == request.form['club']][0]
 
     # Issue #5 : past competition 
-    addPastFlag() 
+    competitions = addPastFlag() 
+    # print(competitions) 
+    competition = [c for c in competitions if c['name'] == request.form['competition']][0] 
+    # print(competition) 
 
     # Issue #2 : more than club's points 
     if int(request.form['places']) > club['points']: 
@@ -119,8 +115,7 @@ def purchasePlaces():
         competition['numberOfPlaces'] = int(competition['numberOfPlaces'])-placesRequired 
         
         # Issue #6 : Deduct the places from the club's points 
-        club_name = club['name'] 
-        # updateClubs(club_name, placesRequired) 
+        club['points'] -= placesRequired 
 
         flash('Great-booking complete!') 
         return render_template('welcome.html', 
@@ -142,3 +137,4 @@ def all_clubs():
 @app.route('/logout')
 def logout():
     return redirect(url_for('index'))
+
