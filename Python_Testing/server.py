@@ -1,10 +1,11 @@
 
+import re 
 import json
 from flask import ( 
     Flask, render_template, request, 
     redirect, flash, url_for 
 ) 
-from datetime import date, datetime  
+from datetime import date, datetime 
 
 
 def loadClubs():
@@ -52,10 +53,21 @@ def index():
 def showSummary(): 
     clubs_email = [club['email'] for club in clubs] 
 
+    # Issue #5 : past competition 
+    time_now = datetime.now() 
+    for comp in competitions: 
+        comp_date = datetime.strptime(comp['date'], "%Y-%m-%d %H:%M:%S") 
+        if comp_date < time_now: 
+            comp['past'] = True 
+        else: 
+            comp['past'] = False 
+        # print(comp) 
+
     # Issue #1 : if email not registered 
     if request.form['email'] not in clubs_email: 
         message = "Ce mail n'est pas enregistré" 
         return render_template('index.html', message=message) 
+
     else: 
         club = [club for club in clubs if club['email'] == request.form['email']][0] 
         return render_template('welcome.html', club=club, competitions=competitions) 
@@ -85,32 +97,7 @@ def purchasePlaces():
 
     # Issue #4 : more than 12 places 
     if int(request.form['places']) > 12: 
-            message = "Vous ne pouvez pas réserver plus de 12 places par compétition." 
-            return render_template('booking.html', 
-                message=message, club=club, competition=competition) 
-
-    # Issue #5 : past competition 
-    for comp in competitions: 
-        if request.form['competition'] == comp['date']: 
-            competition = comp 
-
-    comp_date = competition['date'] 
-    # str_to_dt : strptime 
-    # date_object = datetime.strptime(date_string, "%Y %M, %d, %h, %i?, s") 
-    # "%y-%m-%d %H:%M:%s" 
-    # date_time = now.strftime("%m/%d/%Y, %H:%M:%S") 
-    comp_year = comp_date[0:4] 
-    comp_month = comp_date[5:7] 
-    comp_day = comp_date[8:11] 
-    comp_hour = comp_date[12:14] 
-    comp_minute = comp_date[15:17] 
-    comp_seconds = comp_date[18:20] 
-    date_today = datetime.today() 
-
-    competition_date = datetime(int(comp_year), int(comp_month), int(comp_day)) 
-
-    if competition_date < date_today: 
-        message = "La date de la compétition est passée, vous ne pouvez pas réserver de places." 
+        message = "Vous ne pouvez pas réserver plus de 12 places par compétition." 
         return render_template('booking.html', 
             message=message, club=club, competition=competition) 
     else: 
@@ -119,7 +106,7 @@ def purchasePlaces():
         
         # Issue #6 : Deduct the places from the club's points 
         club_name = club['name'] 
-        updateClubs(club_name, placesRequired) 
+        # updateClubs(club_name, placesRequired) 
 
         flash('Great-booking complete!') 
         return render_template('welcome.html', 
