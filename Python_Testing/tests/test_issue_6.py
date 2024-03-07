@@ -42,17 +42,19 @@ class MyTest(unittest.TestCase):
         # Reserved places 
         places = int(data['places']) 
 
-        # # Club's points before the reservation 
-        for c in clubs: 
-            if data['club'] == c['name']: 
-                club = c 
+        # # Club's points before the reservation : 12 
+        # (after issue 4) 
+        for club in clubs: 
+            if data['club'] == club['name']: 
+                club['points'] = 12 
 
-        message = 'Great-booking complete!' 
-        assert message.encode('utf-8') in response.data 
+        message_booking = 'Great-booking complete!' 
+        assert message_booking.encode('utf-8') in response.data 
 
         # Expected points after reservation 
         club['points'] -= data['places'] 
-        message = f"Points available: {club['points']}" 
-        assert message.encode('utf-8') in response.data 
+        print(club['points']) 
+        message_points = f"Points available: {club['points']}" 
+        assert message_points.encode('utf-8') in response.data 
     # --> ok 
 

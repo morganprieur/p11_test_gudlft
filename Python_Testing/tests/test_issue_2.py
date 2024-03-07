@@ -36,10 +36,13 @@ class MyTest(unittest.TestCase):
 		data = { 
 			"club": "Simply Lift", 
 			"competition": "Fall Classic", 
-			"places": 15 
+			"places": 12 
 		} 
 		response = self.client.post('/purchasePlaces', data=data) 
 		assert response.status_code == 200 
+		# for club in clubs: 
+		# 	if club['name'] == data['club']: 
+		# 		print(club['points']) 
 		assert str('Vous ne pouvez') in str(response.data) 
 		assert str('plus de places que votre nombre de points') in str(response.data) 
 		assert response.request.path == '/purchasePlaces' 
@@ -50,7 +53,7 @@ class MyTest(unittest.TestCase):
 		data = { 
 			"club": "Simply Lift", 
 			"competition": "Fall Classic", 
-			"places": 10 
+			"places": 1 
 		} 
 		response = self.client.post('/purchasePlaces', data=data) 
 		assert response.status_code == 200 

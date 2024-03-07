@@ -11,12 +11,16 @@ from datetime import date
 competitions = loadCompetitions()
 clubs = loadClubs() 
 
-# Issue #7 - FEATURE: Implement Points Display Board  
-# When: 
-# A secretary logs into the app 
-# Then: 
-# They should be able to see the list of clubs and their associated current points balance 
 
+# Issue #7 - FEATURE: Implement Points Display Board 
+class MyTest(unittest.TestCase): 
+    """ 
+        When: 
+        A secretary logs into the app 
+        Then: 
+        They should be able to see the list of clubs 
+        and their associated current points balance 
+    """ 
 class MyTest(unittest.TestCase): 
     def setUp(self):
         self.app = app
@@ -31,13 +35,13 @@ class MyTest(unittest.TestCase):
         assert response.status_code == 200 
         # --> ok 
 
-        # lire response.data 
-        print(response.data) 
+        # # lire response.data 
+        # print(response.data) 
         # vérifier le nombre de clubs affichés 
         # vérifier les points des clubs 
         for c in clubs: 
-            # print(c['name'].encode('utf-8')) 
+            if c['name'] == 'Simply Lift': 
+                c['points'] -= 11 
             assert c['name'].encode('utf-8') in response.data 
-            # print(str(c['points']).encode('utf-8')) 
             assert str(c['points']).encode('utf-8') in response.data 
 

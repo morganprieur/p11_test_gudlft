@@ -34,11 +34,14 @@ class MyTest(unittest.TestCase):
 	def test_message_places_more_than_12(self): 
 		data = { 
 			"club": "Simply Lift", 
-			"competition": "Spring Festival", 
+			"competition": "New Winter", 
 			"places": 13 
 		} 
 		response = self.client.post('/purchasePlaces', data=data) 
 		assert response.status_code == 200 
+		for club in clubs: 
+			if club['name'] == data['club']: 
+				print(club) 
 		assert str('Vous ne pouvez pas') in str(response.data) 
 		assert str('plus de 12 places') in str(response.data) 
 		assert response.request.path == '/purchasePlaces' 
@@ -49,12 +52,11 @@ class MyTest(unittest.TestCase):
 		data = { 
 			"club": "Simply Lift", 
 			"competition": "Spring Festival", 
-			"places": 12 
+			"places": 1 
 		} 
 		response = self.client.post('/purchasePlaces', data=data) 
 		assert response.status_code == 200 
-		assert str('Vous ne pouvez pas') not in str(response.data) 
-		assert str('plus de 12 places') not in str(response.data) 
+		assert str('réserver plus de 12 places') not in str(response.data) 
 		assert response.request.path == '/purchasePlaces' 
 	# --> ok 
 

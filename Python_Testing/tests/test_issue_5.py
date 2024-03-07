@@ -41,8 +41,6 @@ class MyTest(unittest.TestCase):
         time_now = datetime.now() 
         for comp in competitions: 
             comp_date = datetime.strptime(comp['date'], "%Y-%m-%d %H:%M:%S") 
-            # print(comp_date) 
-            # print(comp) 
             if comp_date < time_now: 
                 comp['past'] = True 
             else: 
@@ -79,7 +77,7 @@ class MyTest(unittest.TestCase):
 #             if comp['name'] == 'Fall Classic': 
 #                 assert comp['past'] == True 
 #             if comp['name'] == 'New Winter': 
-#                 assert comp['past'] == True 
+#                 assert comp['past'] == True  # <-- the error 
 
 #         message = 'La date de la compétition est passée, vous ne pouvez pas réserver de places.' 
 #         assert message.encode('utf-8') in response.data 
