@@ -1,0 +1,34 @@
+<!DOCTYPE html> 
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css"> 
+    <!-- <link rel="stylesheet" href="../styles.css"> -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <title>GUDLFT Registration</title>
+</head>
+<body>
+    <div id="home">
+        <h1>Welcome to the GUDLFT Registration Portal!</h1> 
+
+        <section id="clubs_display"> 
+            <h2>Tous les clubs</h2> 
+
+            <table class="w3-table w3-striped"> 
+                <tr>
+                    <th>Noms</th>
+                    <th>Nombre de points</th>
+                </tr>
+                {% for c in clubs %} 
+                <tr> 
+                    <td>{{ c.name }} </td> <td>{{ c.points }} </td> 
+                </tr> 
+                {% endfor %} 
+            </table> 
+            <br> 
+            <button onclick="history.back()">Retour</button> 
+        </section>
+    </div>
+</body>
+</html>

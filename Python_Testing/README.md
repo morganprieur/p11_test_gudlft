@@ -58,8 +58,17 @@
     The app is powered by [JSON files](https://www.tutorialspoint.com/json/json_quick_guide.htm). This is to get around having a DB until we actually need one. The main ones are:
      
     * competitions.json - list of competitions
-    * clubs.json - list of clubs with relevant information. You can look here to see what email addresses the app will accept for login.
+    * clubs.json - list of clubs with relevant information. You can look here to see what email addresses the app will accept for login. 
 
+    **Edit: competitions.json** 
+    I have added a competition, in order to test a future date of competition: 
+    ```json
+        {
+            "name": "New Winter",
+            "date": "2024-12-22 13:30:00",
+            "numberOfPlaces": 15
+        }
+    ``` 
 
 5. Testing
 

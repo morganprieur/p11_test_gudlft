@@ -33,19 +33,20 @@ class MyTest(unittest.TestCase):
 
 	# tester 2 mails des secrétaires 
 	def test_showSummary_club_1(self): 
+		""" Test one registered email, to get the email displayed on the page."""  
 		data = {"email": "john@simplylift.co"} 
 		res = self.client.post('/showSummary', data=data) 
 		assert res.status_code == 200 
 		assert len(clubs) == 3 
 
-		# récupérer les données du form de co 
+		# récupérer les données du form de co. 
 		email = data['email'] 
 		clubs_emails = [club['email'] for club in clubs] 
 		assert email in clubs_emails 
 
 
-	# def test_showSummary_club2(app, client): 
 	def test_showSummary_club_2(self): 
+		""" Test one registered email, to get the email displayed on the page.""" 
 		data = {"email": "admin@irontemple.com"} 
 		res = self.client.post('/showSummary', data=data) 
 		assert res.status_code == 200 
@@ -57,8 +58,8 @@ class MyTest(unittest.TestCase):
 		assert email in clubs_emails 
 
 
-	# def test_showSummary_faux_mail(app, client): 
 	def test_showSummary_faux_mail(self): 
+		""" Test one UNregistered email, to get the email NOT displayed on the page.""" 
 		data = {"email": "jo@simplylift.co"} 
 		response = self.client.post('/showSummary', data=data) 
 		assert response.status_code == 200 

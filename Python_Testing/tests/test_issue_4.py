@@ -32,6 +32,7 @@ class MyTest(unittest.TestCase):
 
 
 	def test_message_places_more_than_12(self): 
+		""" Test more than 12 points, to get the error message displayed on the page.""" 
 		data = { 
 			"club": "Simply Lift", 
 			"competition": "New Winter", 
@@ -49,6 +50,7 @@ class MyTest(unittest.TestCase):
 
 
 	def test_message_places_less_than_12(self): 
+		""" Test LESS than 12 points, to get the error message NOT displayed on the page.""" 
 		data = { 
 			"club": "Simply Lift", 
 			"competition": "Spring Festival", 

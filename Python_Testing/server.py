@@ -19,31 +19,16 @@ def loadCompetitions():
         listOfCompetitions = json.load(comps)['competitions']
         return listOfCompetitions
 
+
 app = Flask(__name__)
 app.secret_key = 'something_special'
+
 
 competitions = loadCompetitions()
 clubs = loadClubs()
 
-# Update the clubs data 
-def updateClubs(club_name, placesRequired): 
-    listOfClubs = loadClubs() 
 
-    for c in listOfClubs: 
-        if club_name == c['name']: 
-            club = listOfClubs.pop(listOfClubs.index(c)) 
-            club['points'] -= placesRequired 
-            # file deepcode ignore InfiniteLoopByCollectionModification/test: local and dev project 
-            listOfClubs.append(club) 
-
-            to_register = {} 
-            to_register['clubs'] = listOfClubs 
-
-            with open(f"clubs.json", "w") as cfile: 
-                json.dump(to_register, cfile, indent=4) 
-            return True 
-
-# Add a 'past' attribute into competition items. 
+# Issue #5: Add a 'past' attribute into competition items (only into the memory, not into the json file). 
 def addPastFlag(): 
     time_now = datetime.now() 
     for comp in competitions: 
@@ -52,7 +37,7 @@ def addPastFlag():
             comp['past'] = True 
         else: 
             comp['past'] = False 
-        print(comp) 
+        # print(comp) 
     return competitions 
 
 
@@ -60,9 +45,8 @@ def addPastFlag():
 @app.route('/')
 def index(): 
     # Issue #7 : Implement Points Display Board 
-    # for c in clubs: 
-    #     print(c) 
     return render_template('index.html', clubs=clubs)
+
 
 @app.route('/showSummary', methods=['POST'])
 def showSummary(): 
@@ -94,14 +78,11 @@ def book(competition,club):
 
 @app.route('/purchasePlaces', methods=['POST'])
 def purchasePlaces():
-    # competition = [c for c in competitions if c['name'] == request.form['competition']][0]
     club = [c for c in clubs if c['name'] == request.form['club']][0]
 
     # Issue #5 : past competition 
     competitions = addPastFlag() 
-    # print(competitions) 
     competition = [c for c in competitions if c['name'] == request.form['competition']][0] 
-    # print(competition) 
 
     # Issue #4 : more than 12 places 
     if int(request.form['places']) > 12: 
@@ -132,11 +113,11 @@ def purchasePlaces():
 def all_clubs(): 
     return clubs 
 
-# @app.route('/hello', methods=['GET']) 
-# def hello(): 
-#     return {'hello': 'world'} 
-
 # TODO: Add route for points display 
+@app.route('/board')
+def board(): 
+    # Issue #7 : Implement Points Display Board 
+    return render_template('board.html', clubs=clubs)
 
 
 @app.route('/logout')

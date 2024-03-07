@@ -34,7 +34,11 @@ class MyTest(unittest.TestCase):
         self.app_ctxt.push()
         self.client = self.app.test_client()
 
+
     def test_message_past_competition_assert_pass(self): 
+        """ Test the date of the competitions, to get the error messages displayed on the page. 
+            One assertion per competition. 
+        """ 
         response = self.client.post('/showSummary', data={'email':'john@simplylift.co'}) 
         assert response.status_code == 200 
 
@@ -57,8 +61,11 @@ class MyTest(unittest.TestCase):
         assert message.encode('utf-8') in response.data 
     # --> ok 
 
-# Uncomment to run a test with an error 
-# def test_message_past_competition_assert_doesnt_pass(self): 
+# Uncomment to run a test with an error (bad function result) 
+#     def test_message_past_competition_assert_doesnt_pass(self): 
+        # """ Test the date of the competitions, with an error on the last competition, to get the error messages displayed on the page. 
+        #     One assertion per competition. The "New winter" competition has the bad message. 
+        # """ 
 #         response = self.client.post('/showSummary', data={'email':'john@simplylift.co'}) 
 #         assert response.status_code == 200 
 

@@ -30,7 +30,13 @@ class MyTest(unittest.TestCase):
         self.app_ctxt.push()
         self.client = self.app.test_client()
 
+
     def test_deduct_club_points(self): 
+        """ Test the deduction of the club's points after places reservation. 
+            Assuming the nomber of points before the reservation, accroding the past tests. 
+            - Get the "Great-booking complete" message, 
+            - Get the correct nomber of points. 
+        """ 
         data = { 
             "club": "Simply Lift", 
             "competition": "New Winter", 
@@ -42,8 +48,7 @@ class MyTest(unittest.TestCase):
         # Reserved places 
         places = int(data['places']) 
 
-        # # Club's points before the reservation : 12 
-        # (after issue 4) 
+        # # Club's points before the reservation : 12 (after issue 4) 
         for club in clubs: 
             if data['club'] == club['name']: 
                 club['points'] = 12 
@@ -53,7 +58,7 @@ class MyTest(unittest.TestCase):
 
         # Expected points after reservation 
         club['points'] -= data['places'] 
-        print(club['points']) 
+        # print(club['points']) 
         message_points = f"Points available: {club['points']}" 
         assert message_points.encode('utf-8') in response.data 
     # --> ok 
