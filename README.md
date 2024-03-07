@@ -58,13 +58,38 @@
     The app is powered by [JSON files](https://www.tutorialspoint.com/json/json_quick_guide.htm). This is to get around having a DB until we actually need one. The main ones are:
      
     * competitions.json - list of competitions
-    * clubs.json - list of clubs with relevant information. You can look here to see what email addresses the app will accept for login.
+    * clubs.json - list of clubs with relevant information. You can look here to see what email addresses the app will accept for login. 
 
+    **Edit: competitions.json** 
+    I have added a competition, in order to test a future date of competition: 
+    ```json
+        {
+            "name": "New Winter",
+            "date": "2024-12-22 13:30:00",
+            "numberOfPlaces": 15
+        }
+    ``` 
 
 5. Testing
 
-    You are free to use whatever testing framework you like-the main thing is that you can show what tests you are using.
+    You are free to use whatever testing framework you like-the main thing is that you can show what tests you are using. 
 
     We also like to show how well we're testing, so there's a module called 
     [coverage](https://coverage.readthedocs.io/en/coverage-5.1/) you should add to your project.
+
+
+    **Edit: run the tests** 
+    `coverage run -m pytest tests/test_issue_7.py tests/test_issue_1.py tests/test_issue_4.py tests/test_issue_6.py tests/test_issue_5.py tests/test_issue_2.py -v` 
+    This order allows to have the correct values of the club points, according to the places reserved in the past tests. 
+
+    The coverage indicates only the % of the tests passed with success, not the coverage of the code itself. 
+
+
+6. Performance 
+
+    This setup uses (Locust)[https://docs.locust.io/en/stable/index.html] to test the load performance. 
+
+    To run it: 
+    - `locust` 
+    - and open the `http://localhost:8089` url to drive the tools. 
 

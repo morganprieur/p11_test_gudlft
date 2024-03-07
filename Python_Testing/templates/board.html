@@ -12,19 +12,6 @@
     <div id="home">
         <h1>Welcome to the GUDLFT Registration Portal!</h1> 
 
-        <section id="connexion"> 
-            {% if message %} 
-                <p style="color:red">{{ message }}</p> 
-            {% endif %} 
-
-            Please enter your secretary email to continue:
-            <form action="showSummary" method="post">
-                <label for="email">Email:</label>
-                <input type="email" name="email" id=""/>
-                <button type="submit">Enter</button>
-            </form> 
-        </section>
-
         <section id="clubs_display"> 
             <h2>Tous les clubs</h2> 
 
@@ -39,6 +26,8 @@
                 </tr> 
                 {% endfor %} 
             </table> 
+            <br> 
+            <button onclick="history.back()">Retour</button> 
         </section>
     </div>
 </body>
