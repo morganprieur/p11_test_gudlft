@@ -63,8 +63,24 @@
 
 5. Testing
 
-    You are free to use whatever testing framework you like-the main thing is that you can show what tests you are using.
+    You are free to use whatever testing framework you like-the main thing is that you can show what tests you are using. 
 
     We also like to show how well we're testing, so there's a module called 
     [coverage](https://coverage.readthedocs.io/en/coverage-5.1/) you should add to your project.
+
+
+    **Edit: run the tests** 
+    `coverage run -m pytest tests/test_issue_7.py tests/test_issue_1.py tests/test_issue_4.py tests/test_issue_6.py tests/test_issue_5.py tests/test_issue_2.py -v` 
+    This order allows to have the correct values of the club points, according to the places reserved in the past tests. 
+
+    The coverage indicates only the % of the tests passed with success, not the coverage of the code itself. 
+
+
+6. Performance 
+
+    This setup uses (Locust)[https://docs.locust.io/en/stable/index.html] to test the load performance. 
+
+    To run it: 
+    - `locust` 
+    - and open the `http://localhost:8089` url to drive the tools. 
 

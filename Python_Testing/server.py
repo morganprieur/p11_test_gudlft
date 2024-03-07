@@ -11,6 +11,7 @@ from datetime import date, datetime
 def loadClubs():
     with open('clubs.json') as c:
         listOfClubs = json.load(c)['clubs'] 
+        print('loadClubs : ', listOfClubs) 
         return listOfClubs
 
 def loadCompetitions():
@@ -54,10 +55,13 @@ def addPastFlag():
         print(comp) 
     return competitions 
 
+
 # ======== Routes ========  # 
 @app.route('/')
 def index(): 
     # Issue #7 : Implement Points Display Board 
+    # for c in clubs: 
+    #     print(c) 
     return render_template('index.html', clubs=clubs)
 
 @app.route('/showSummary', methods=['POST'])
@@ -99,17 +103,18 @@ def purchasePlaces():
     competition = [c for c in competitions if c['name'] == request.form['competition']][0] 
     # print(competition) 
 
+    # Issue #4 : more than 12 places 
+    if int(request.form['places']) > 12: 
+        message = "Vous ne pouvez pas réserver plus de 12 places par compétition." 
+        return render_template('booking.html', 
+            message=message, club=club, competition=competition) 
+
     # Issue #2 : more than club's points 
     if int(request.form['places']) > club['points']: 
         message = f"Vous ne pouvez pas réserver plus de places que votre nombre de points ({club['points']})" 
         return render_template('booking.html', 
             message=message, club=club, competition=competition) 
 
-    # Issue #4 : more than 12 places 
-    if int(request.form['places']) > 12: 
-        message = "Vous ne pouvez pas réserver plus de 12 places par compétition." 
-        return render_template('booking.html', 
-            message=message, club=club, competition=competition) 
     else: 
         placesRequired = int(request.form['places']) 
         competition['numberOfPlaces'] = int(competition['numberOfPlaces'])-placesRequired 
