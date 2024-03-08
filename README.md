@@ -79,7 +79,7 @@
 
 
     **Edit: run the tests** 
-    `coverage run -m pytest tests/test_issue_7.py tests/test_issue_1.py tests/test_issue_4.py tests/test_issue_6.py tests/test_issue_5.py tests/test_issue_2.py -v` 
+    `coverage run -m pytest tests/test_issue_7.py tests/test_issue_1.py tests/test_issue_4.py tests/test_issue_6.py tests/test_issue_5.py tests/test_issue_2.py -v`     
     This order allows to have the correct values of the club points, according to the places reserved in the past tests. 
 
     The coverage indicates only the % of the tests passed with success, not the coverage of the code itself. 
