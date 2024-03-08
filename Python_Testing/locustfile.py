@@ -217,8 +217,3 @@ class myrec_logout(FastHttpUser):
         ) as resp:
             pass
 
-
-# if __name__ == "__main__":
-    # run_single_user(myrec_get)
-    # run_single_user(myrec_showSummary)
-    # run_single_user(myrec_purchasePlaces)
