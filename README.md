@@ -87,7 +87,7 @@
 
 6. Performance 
 
-    This setup uses (Locust)[https://docs.locust.io/en/stable/index.html] to test the load performance. 
+    This setup uses [Locust](https://docs.locust.io/en/stable/index.html) to test the load performance. 
 
     To run it: 
     - `locust` 
