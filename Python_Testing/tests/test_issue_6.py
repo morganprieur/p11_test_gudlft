@@ -38,7 +38,7 @@ class MyTest(unittest.TestCase):
             - Get the correct nomber of points. 
         """ 
         data = { 
-            "club": "Simply Lift", 
+            "club": "She Lifts", 
             "competition": "New Winter", 
             "places": 1 
         } 
@@ -48,18 +48,20 @@ class MyTest(unittest.TestCase):
         # Reserved places 
         places = int(data['places']) 
 
-        # # Club's points before the reservation : 12 (after issue 4) 
-        for club in clubs: 
-            if data['club'] == club['name']: 
-                club['points'] = 12 
+        club = {} 
+        for c in clubs: 
+            if c['name'] == data['club']: 
+                club = c 
+
+        # Expected points after reservation 
+        club['points'] -= data['places'] 
 
         message_booking = 'Great-booking complete!' 
         assert message_booking.encode('utf-8') in response.data 
 
-        # Expected points after reservation 
-        club['points'] -= data['places'] 
-        # print(club['points']) 
-        message_points = f"Points available: {club['points']}" 
-        assert message_points.encode('utf-8') in response.data 
+        message_txt = 'Points available: ' 
+        message_points = str(club['points']) 
+        message = str(message_txt + message_points)
+        assert message.encode('utf-8') in response.data 
     # --> ok 
 

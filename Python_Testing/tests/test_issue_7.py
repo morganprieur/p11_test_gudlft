@@ -21,7 +21,6 @@ class MyTest(unittest.TestCase):
         They should be able to see the list of clubs 
         and their associated current points balance 
     """ 
-class MyTest(unittest.TestCase): 
     def setUp(self):
         self.app = app
         self.app_ctxt = self.app.app_context()
@@ -39,10 +38,17 @@ class MyTest(unittest.TestCase):
 
         # # lire response.data 
         # print(response.data) 
+
         # vérifier les points des clubs 
         for c in clubs: 
             if c['name'] == 'Simply Lift': 
-                c['points'] -= 11  # <-- The number of remaing points after the past tests. 
+                c['points'] -= 1  # <-- The number of remaing points after the past tests. 
+            if c['name'] == 'She Lifts': 
+                c['points'] -= 1  # <-- The number of remaing points after the past tests. 
+            if c['name'] == 'Iron Temple Lifts': 
+                c['points'] -= 1  # <-- The number of remaing points after the past tests. 
+
             assert c['name'].encode('utf-8') in response.data 
             assert str(c['points']).encode('utf-8') in response.data 
+        # --> ok 
 

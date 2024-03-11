@@ -60,6 +60,16 @@
     * competitions.json - list of competitions
     * clubs.json - list of clubs with relevant information. You can look here to see what email addresses the app will accept for login. 
 
+    **Edit: clubs.json** 
+    I have modified the number of points of the last club, the errors was not thrown instead. 
+    ```json
+    {
+        "name": "Simply Lift",
+        "email": "john@simplylift.co",
+        "points": 14
+    } 
+    ``` 
+
     **Edit: competitions.json** 
     I have added a competition, in order to test a future date of competition: 
     ```json
@@ -82,6 +92,9 @@
     `coverage run -m pytest tests/test_issue_7.py tests/test_issue_1.py tests/test_issue_4.py tests/test_issue_6.py tests/test_issue_5.py tests/test_issue_2.py -v`     
     This order allows to have the correct values of the club points, according to the places reserved in the past tests. 
 
+    **Coverage usage:** 
+    To launch the coverage: `pytest --cov=<repertoire>` 
+
     The coverage indicates only the % of the tests passed with success, not the coverage of the code itself. 
 
 
@@ -92,4 +105,9 @@
     To run it: 
     - `locust` 
     - and open the `http://localhost:8089` url to drive the tools. 
+
+    Locust allows to measure the time to run requests. Into the script, indicate the requests to test. 
+***
+    L'outil Locust va te permettre de mesurer le temps de test requetes. Dans le script locust tu spécifies les requetes que tu veux tester. 
+*** 
 

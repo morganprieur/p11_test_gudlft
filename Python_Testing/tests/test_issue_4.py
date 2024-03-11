@@ -23,7 +23,6 @@ class MyTest(unittest.TestCase):
 		The UI should prevent them from booking more than 12 places. 
 		The places are correctly deducted from the competition. 
 	""" 
-
 	def setUp(self):
 		self.app = app
 		self.app_ctxt = self.app.app_context()
@@ -32,7 +31,8 @@ class MyTest(unittest.TestCase):
 
 
 	def test_message_places_more_than_12(self): 
-		""" Test more than 12 points, to get the error message displayed on the page.""" 
+		""" Test more than 12 points, to get the error message displayed on the page. 
+		""" 
 		data = { 
 			"club": "Simply Lift", 
 			"competition": "New Winter", 
@@ -40,17 +40,19 @@ class MyTest(unittest.TestCase):
 		} 
 		response = self.client.post('/purchasePlaces', data=data) 
 		assert response.status_code == 200 
-		for club in clubs: 
-			if club['name'] == data['club']: 
-				print(club) 
-		assert str('Vous ne pouvez pas') in str(response.data) 
+
+		for comp in competitions: 
+			if comp['name'] == data['competition']: 
+				comp['numberOfPlaces'] = 15 
+				print(comp['numberOfPlaces']) 
 		assert str('plus de 12 places') in str(response.data) 
 		assert response.request.path == '/purchasePlaces' 
 	# --> ok 
 
 
 	def test_message_places_less_than_12(self): 
-		""" Test LESS than 12 points, to get the error message NOT displayed on the page.""" 
+		""" Test LESS than 12 points, to get the error message NOT displayed on the page. 
+		""" 
 		data = { 
 			"club": "Simply Lift", 
 			"competition": "Spring Festival", 

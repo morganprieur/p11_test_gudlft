@@ -61,7 +61,7 @@ class MyTest(unittest.TestCase):
         assert message.encode('utf-8') in response.data 
     # --> ok 
 
-# Uncomment to run a test with an error (bad function result) 
+# UNCOMMENT to run a test with an error (bad function result) 
 #     def test_message_past_competition_assert_doesnt_pass(self): 
         # """ Test the date of the competitions, with an error on the last competition, to get the error messages displayed on the page. 
         #     One assertion per competition. The "New winter" competition has the bad message. 
