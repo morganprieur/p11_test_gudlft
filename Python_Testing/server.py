@@ -11,7 +11,6 @@ from datetime import date, datetime
 def loadClubs():
     with open('clubs.json') as c:
         listOfClubs = json.load(c)['clubs'] 
-        print('loadClubs : ', listOfClubs) 
         return listOfClubs
 
 def loadCompetitions():
@@ -37,7 +36,6 @@ def addPastFlag():
             comp['past'] = True 
         else: 
             comp['past'] = False 
-        # print(comp) 
     return competitions 
 
 
@@ -66,7 +64,7 @@ def showSummary():
 
 
 @app.route('/book/<competition>/<club>')
-def book(competition,club):
+def book(competition, club):
     foundClub = [c for c in clubs if c['name'] == club][0]
     foundCompetition = [c for c in competitions if c['name'] == competition][0]
     if foundClub and foundCompetition:
@@ -77,22 +75,23 @@ def book(competition,club):
 
 
 @app.route('/purchasePlaces', methods=['POST'])
-def purchasePlaces():
+def purchasePlaces(): 
     club = [c for c in clubs if c['name'] == request.form['club']][0]
+
 
     # Issue #5 : past competition 
     competitions = addPastFlag() 
     competition = [c for c in competitions if c['name'] == request.form['competition']][0] 
 
-    # Issue #4 : more than 12 places 
-    if int(request.form['places']) > 12: 
-        message = "Vous ne pouvez pas réserver plus de 12 places par compétition." 
-        return render_template('booking.html', 
-            message=message, club=club, competition=competition) 
-
     # Issue #2 : more than club's points 
     if int(request.form['places']) > club['points']: 
         message = f"Vous ne pouvez pas réserver plus de places que votre nombre de points ({club['points']})" 
+        return render_template('booking.html', 
+            message=message, club=club, competition=competition) 
+
+    # Issue #4 : more than 12 places 
+    if int(request.form['places']) > 12: 
+        message = "Vous ne pouvez pas réserver plus de 12 places par compétition." 
         return render_template('booking.html', 
             message=message, club=club, competition=competition) 
 

@@ -24,7 +24,6 @@ class MyTest(unittest.TestCase):
 		this should be done within the UI. 
 		The redeemed points should be correctly deducted from the club's total. 
 	""" 
-
 	def setUp(self):
 		self.app = app
 		self.app_ctxt = self.app.app_context()
@@ -35,28 +34,26 @@ class MyTest(unittest.TestCase):
 	def test_message_places_superieur_points(self): 
 		""" Test more than the club's number of points, to get the error message displayed on the page.""" 
 		data = { 
-			"club": "Simply Lift", 
-			"competition": "Fall Classic", 
-			"places": 12 
+			"club": "Iron Temple", 
+			"competition": "New Winter", 
+			"places": 7 
 		} 
 		response = self.client.post('/purchasePlaces', data=data) 
 		assert response.status_code == 200 
-		# for club in clubs: 
-		# 	if club['name'] == data['club']: 
-		# 		print(club['points']) 
+
 		assert str('plus de places que votre nombre de points') in str(response.data) 
-		assert response.request.path == '/purchasePlaces' 
 	# --> ok 
 
 
 	def test_message_places_inferieur_points(self): 
 		""" Test LESS than the club's number of points, to get the error message NOT displayed on the page.""" 
 		data = { 
-			"club": "Simply Lift", 
-			"competition": "Fall Classic", 
+			"club": "Iron Temple", 
+			"competition": "New Winter", 
 			"places": 1 
 		} 
 		response = self.client.post('/purchasePlaces', data=data) 
 		assert response.status_code == 200 
-		assert str('plus de places que votre nombre de points') not in str(response.data) 
+		message = 'Great-booking complete!' 
+		assert message.encode('utf-8') in response.data 
 	# --> ok 
