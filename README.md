@@ -50,7 +50,10 @@
     - You should now be ready to test the application. In the directory, type either <code>flask run</code> or <code>python -m flask run</code>. The app should respond with an address you should be able to go to using your browser. 
 
     **Edit: run the server** 
-    In Flask 3.0.0, type `flask --app server run --debug` to run the server. 
+    In Flask 3.0.0, type:    
+    `cd Python_Testing`     
+    `flask --app server run --debug` 
+    to run the server. 
 
 
 4. Current Setup
