@@ -34,9 +34,10 @@ class MyTest(unittest.TestCase):
 	def test_message_places_superieur_points(self): 
 		""" Test more than the club's number of points, to get the error message displayed on the page.""" 
 		data = { 
-			"club": "Iron Temple", 
+			"club": "Simply Lift", 
+			# "club": "Iron Temple", 
 			"competition": "New Winter", 
-			"places": 7 
+			"places": 18 
 		} 
 		response = self.client.post('/purchasePlaces', data=data) 
 		assert response.status_code == 200 

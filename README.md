@@ -50,7 +50,10 @@
     - You should now be ready to test the application. In the directory, type either <code>flask run</code> or <code>python -m flask run</code>. The app should respond with an address you should be able to go to using your browser. 
 
     **Edit: run the server** 
-    In Flask 3.0.0, type `flask --app server run --debug` to run the server. 
+    In Flask 3.0.0, type:    
+    `cd Python_Testing`     
+    `flask --app server run --debug` 
+    to run the server. 
 
 
 4. Current Setup
@@ -89,11 +92,12 @@
 
 
     **Edit: run the tests** 
-    `coverage run -m pytest tests/test_issue_7.py tests/test_issue_1.py tests/test_issue_4.py tests/test_issue_6.py tests/test_issue_5.py tests/test_issue_2.py -v`     
-    This order allows to have the correct values of the club points, according to the places reserved in the past tests. 
-
-    **Coverage usage:** 
-    To launch the coverage: `pytest --cov=<repertoire>` 
+    * Pytest usage: 
+    - launch pipenv 
+    - enter the folder: `cd Python_Testing` 
+    - run the tests: `pytest path/to/test_file.py <-v>`  (`-v` = "verbose") 
+    * Coverage usage: 
+    To launch the coverage: `pytest --cov=tests/` 
 
     The coverage indicates only the % of the tests passed with success, not the coverage of the code itself. 
 
