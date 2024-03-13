@@ -43,6 +43,7 @@ class MyTest(unittest.TestCase):
 		print(response.data)  
 
 		assert str('plus de places que le nombre de places disponibles pour cette comp').encode('utf-8') in response.data 
+    # --> ok 
 
 
 	def test_message_places_less_than_competition_points(self): 
@@ -72,7 +73,7 @@ class MyTest(unittest.TestCase):
 			if c['name'] == data['competition']: 
 			    competition = c 
 		assert int(competition['numberOfPlaces']) > 0 
-
+    # --> ok 
 
 
 

@@ -37,7 +37,7 @@ class MyTest(unittest.TestCase):
         # --> ok 
 
         # # lire response.data 
-        print(response.data) 
+        # print(response.data) 
 
         # vérifier les points des clubs 
         for c in clubs: 

@@ -7,10 +7,6 @@ from server import app
 import unittest
 
 
-# competitions = loadCompetitions()
-# clubs = loadClubs() 
-
-
 # Issue #4 - Booking more than 12 places. 
 class MyTest(unittest.TestCase): 
 	""" 
