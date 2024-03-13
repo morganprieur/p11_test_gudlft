@@ -92,6 +92,10 @@
 
 
     **Edit: run the tests** 
+    * Pytest usage: 
+    - launch pipenv 
+    - enter the folder: `cd Python_Testing` 
+    - run the tests: `pytest path/to/test_file.py <-v>`  (`-v` = "verbose") 
     * Coverage usage: 
     To launch the coverage: `pytest --cov=tests/` 
 

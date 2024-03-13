@@ -37,12 +37,12 @@ class MyTest(unittest.TestCase):
         # --> ok 
 
         # # lire response.data 
-        # print(response.data) 
+        print(response.data) 
 
         # vérifier les points des clubs 
         for c in clubs: 
             if c['name'] == 'Simply Lift': 
-                c['points'] -= 1  # <-- The number of remaing points after the past tests. 
+                c['points'] -= 2  # <-- The number of remaing points after the past tests. 
             if c['name'] == 'She Lifts': 
                 c['points'] -= 1  # <-- The number of remaing points after the past tests. 
             if c['name'] == 'Iron Temple Lifts': 

@@ -36,12 +36,13 @@ class MyTest(unittest.TestCase):
 		data = { 
 			"club": "Simply Lift", 
 			"competition": "New Winter", 
-			"places": 11 
+			"places": 16 
 		} 
 		response = self.client.post('/purchasePlaces', data=data) 
 		assert response.status_code == 200 
+		print(response.data)  
 
-		assert str('plus de places que le nombre de places disponibles pour cette compé').encode('utf-8') in response.data 
+		assert str('plus de places que le nombre de places disponibles pour cette comp').encode('utf-8') in response.data 
 
 
 	def test_message_places_less_than_competition_points(self): 
@@ -67,6 +68,10 @@ class MyTest(unittest.TestCase):
 			    club = c 
 		club['points'] -= data['places'] 
 		assert str(club['points']).encode('utf-8') in response.data 
+		for c in competitions: 
+			if c['name'] == data['competition']: 
+			    competition = c 
+		assert int(competition['numberOfPlaces']) > 0 
 
 
 

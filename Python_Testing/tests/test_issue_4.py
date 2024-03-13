@@ -7,8 +7,8 @@ from server import app
 import unittest
 
 
-competitions = loadCompetitions()
-clubs = loadClubs() 
+# competitions = loadCompetitions()
+# clubs = loadClubs() 
 
 
 # Issue #4 - Booking more than 12 places. 
@@ -23,11 +23,11 @@ class MyTest(unittest.TestCase):
 		The UI should prevent them from booking more than 12 places. 
 		The places are correctly deducted from the competition. 
 	""" 
-	def setUp(self):
-		self.app = app
-		self.app_ctxt = self.app.app_context()
-		self.app_ctxt.push()
-		self.client = self.app.test_client()
+	def setUp(self): 
+		self.app = app 
+		self.app_ctxt = self.app.app_context() 
+		self.app_ctxt.push() 
+		self.client = self.app.test_client() 
 
 
 	def test_message_places_more_than_12(self): 
@@ -40,11 +40,8 @@ class MyTest(unittest.TestCase):
 		} 
 		response = self.client.post('/purchasePlaces', data=data) 
 		assert response.status_code == 200 
+		print(response.data) 
 
-		for comp in competitions: 
-			if comp['name'] == data['competition']: 
-				comp['numberOfPlaces'] = 15 
-				print(comp['numberOfPlaces']) 
 		assert str('plus de 12 places') in str(response.data) 
 		assert response.request.path == '/purchasePlaces' 
 	# --> ok 

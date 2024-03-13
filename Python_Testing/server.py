@@ -112,10 +112,10 @@ def purchasePlaces():
             club=club, competitions=competitions) 
 
 
-# For tests 
-@app.route('/all_clubs', methods=['GET']) 
-def all_clubs(): 
-    return clubs 
+# # For tests 
+# @app.route('/all_clubs', methods=['GET']) 
+# def all_clubs(): 
+#     return clubs 
 
 # TODO: Add route for points display 
 @app.route('/board')
