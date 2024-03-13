@@ -41,7 +41,7 @@ class MyTest(unittest.TestCase):
 		response = self.client.post('/purchasePlaces', data=data) 
 		assert response.status_code == 200 
 
-		assert str('plus de places que le nombre de places disponibles pour cette compétition') in str(response.data) 
+		assert str('plus de places que le nombre de places disponibles pour cette compé').encode('utf-8') in response.data 
 
 
 	def test_message_places_less_than_competition_points(self): 

@@ -78,7 +78,6 @@ def book(competition, club):
 def purchasePlaces(): 
     club = [c for c in clubs if c['name'] == request.form['club']][0]
 
-
     # Issue #5 : past competition 
     competitions = addPastFlag() 
     competition = [c for c in competitions if c['name'] == request.form['competition']][0] 
@@ -86,6 +85,12 @@ def purchasePlaces():
     # Issue #2 : more than club's points 
     if int(request.form['places']) > club['points']: 
         message = f"Vous ne pouvez pas réserver plus de places que votre nombre de points ({club['points']})" 
+        return render_template('booking.html', 
+            message=message, club=club, competition=competition) 
+
+    # Issue #22: more than competition's places 
+    if int(request.form['places']) > competition['numberOfPlaces']: 
+        message = f"Vous ne pouvez pas réserver plus de places que le nombre de places disponibles pour cette compétition ({competition['numberOfPlaces']})." 
         return render_template('booking.html', 
             message=message, club=club, competition=competition) 
 
