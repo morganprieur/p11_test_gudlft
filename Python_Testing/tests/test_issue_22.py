@@ -15,11 +15,13 @@ clubs = loadClubs()
 class MyTest(unittest.TestCase): 
 	""" 
         Issue #22: When:
-        A secretary redeems more points than the competition's number of places, which would leave them in the negative
+        A secretary redeems more points than the competition's number of places, 
+        which would leave them in the negative
         Then:
         They receive a confirmation message
         Expected:
-        They should not be able to book more places than available for the competition; this should be done within the UI.
+        They should not be able to book more places than available for the competition; 
+        this should be done within the UI.
         The booked places should be correctly deducted from the competition's total.
 	""" 
 	def setUp(self):
